@@ -3,8 +3,7 @@
 
 clear;
 
-disp("-----Finish Solving Problem 1-----")
-pause
+% -----Problem 1-----
 % load image
 pepperIm = imread('peppers.bmp');
 
@@ -13,10 +12,11 @@ f = figure();
 imshow(pepperIm);
 title('RGB Original Image');
 
-
-disp("-----Finish Solving Problem 2-----")
+disp("-----Finish Solving Problem 1-----")
 pause
 
+
+% -----Problem 2-----
 %get all of our matrices 
 pepperGrayIm = rgb2gray(pepperIm);
 pepperGrayImT = pepperGrayIm.';
@@ -50,27 +50,36 @@ imshow(pepperGrayImF);
 title('pepperGrayImF');
 
 
+disp("-----Finish Solving Problem 2-----")
+pause
 
+
+
+% -----Problem 3-----
+%TODO: Solve problem 3
 disp("-----Finish Solving Problem 3-----")
 pause
-%TODO: Solve problem 3
 
+
+% -----Problem 4-----
+%TODO: Solve problem 4
 disp("-----Finish Solving Problem 4-----")
 pause
-%TODO: Solve problem 4
 
+% -----Problem 5-----
+%TODO: Solve problem 5
 disp("-----Finish Solving Problem 5-----")
 pause
-%TODO: Solve problem 5
 
+% -----Problem 6-----
+%TODO: Solve problem 6
 disp("-----Finish Solving Problem 6-----")
 pause
-%TODO: Solve problem 6
 
-disp("-----Finish Solving Problem 7-----")
-pause
-%TODO: Solve problem 7
+% -----Problem 7-----
 clear;
 close all;
+disp("-----Finish Solving Problem 7-----")
+pause
 
 

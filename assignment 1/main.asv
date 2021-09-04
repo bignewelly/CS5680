@@ -3,8 +3,7 @@
 
 clear;
 
-disp("-----Finish Solving Problem 1-----")
-pause
+% Problem 1
 % load image
 pepperIm = imread('peppers.bmp');
 
@@ -13,16 +12,18 @@ f = figure();
 imshow(pepperIm);
 title('RGB Original Image');
 
-
-disp("-----Finish Solving Problem 2-----")
+disp("-----Finish Solving Problem 1-----")
 pause
 
+
+% Problem 2
 %get all of our matrices 
 pepperGrayIm = rgb2gray(pepperIm);
 pepperGrayImT = pepperGrayIm.';
-%TODO: fix this flip (it should take the bottom and move it to the top
-pepperGrayImH(1:256, 1:512) = pepperGrayIm(257:512, 1:512);
-pepperGrayImH(1:256, 1:512) = pepperGrayIm(257:512, 1:512);
+
+pepperGrayImH(1:256, :) = pepperGrayIm(257:512, :);
+pepperGrayImH(257:512, :) = pepperGrayIm(1:256, :);
+
 pepperGrayImF = fliplr(pepperGrayIm);
 
 %display images
@@ -49,10 +50,17 @@ imshow(pepperGrayImF);
 title('pepperGrayImF');
 
 
+% -----Problem 2
+
+disp("-----Finish Solving Problem 2-----")
+pause
+
+
 
 disp("-----Finish Solving Problem 3-----")
 pause
 %TODO: Solve problem 3
+
 
 disp("-----Finish Solving Problem 4-----")
 pause
