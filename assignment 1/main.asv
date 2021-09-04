@@ -4,13 +4,12 @@
 disp("-----Finish Solving Problem 1-----")
 pause
 % load image
-pepperIm = imread('peppers.bmp');
+imgLena = imread('Lena.jpg');
 
 f = figure();
+f('t
 
-imshow(pepperIm);
-title('RGB Original Image');
-
+%TODO: Solve problem 1
 
 disp("-----Finish Solving Problem 2-----")
 pause
@@ -36,6 +35,6 @@ disp("-----Finish Solving Problem 7-----")
 pause
 %TODO: Solve problem 7
 clear;
-close all;
+%TODO: close all images
 
 
