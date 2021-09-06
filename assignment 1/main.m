@@ -115,7 +115,6 @@ pause
 
 
 % -----Problem 4-----
-%TODO: Solve problem 4
 if maxValue > 0
     pepperGrayImN = double(pepperGrayIm)./double(maxValue);
 else
@@ -149,7 +148,51 @@ disp("-----Finish Solving Problem 4-----")
 pause
 
 % -----Problem 5-----
-%TODO: Solve problem 5
+% set threshold value
+t = 0.35;
+
+% My method 1
+bw1 = zeros(size(pepperGrayImN));
+tVals = find(pepperGrayImN > t);
+bw1(tVals) = 1;
+
+% My method 2
+bw2 = ones(size(pepperGrayImN));
+tVal2s = find(pepperGrayImN <= t);
+bw2(tVal2s) = 0;
+
+% Matlab method
+bw3 = imbinarize(pepperGrayImN, t);
+
+% report results
+if bw1 == bw3 & bw2 == bw3
+    disp('Both of my methods worked');
+elseif bw1 == bw3
+    disp('My first method worked, but not my second.');
+elseif bw2 == bw3
+    disp('My second method worked, but not my first.');
+else
+    disp('Neither of my methods worked.');
+end
+
+%display images
+figure();
+
+%display bw1 on the left
+subplot(1,3,1);
+imshow(bw1);
+title('my first method');
+
+%display bw2 in the middle
+subplot(1,3,2);
+imshow(bw2);
+title('my second method');
+
+%display bw3 on the right
+subplot(1,3,3);
+imshow(bw3);
+title('Matlab method');
+
 disp("-----Finish Solving Problem 5-----")
 pause
 
