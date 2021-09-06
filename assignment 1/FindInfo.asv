@@ -85,23 +85,19 @@ function [sorted] = MergeSort(A)
         while i <= sizeA
             
             % If we're still in B, get the current B value, otherwise we'll
-            % just mark it as a -1
+            % just mar
             if b <= sizeB
                 bVal = B(b);
             else
                 bVal = -1;
             end
             
-            % If we're still in C, get the current C value, otherwise we'll
-            % just mark it as a -1
             if c <= sizeC
                 cVal = C(c);
             else
                 cVal = -1;
             end
             
-            % If we have already grabbed all of B, just fill the rest with
-            % C and visa versa
             if bVal == -1
                 sorted(i) = cVal;
                 c = c + 1;
@@ -109,18 +105,15 @@ function [sorted] = MergeSort(A)
                 sorted(i) = bVal;
                 b = b + 1;
             elseif bVal <= cVal
-                % If current B value is less than or equal to cVal, use it
                 sorted(i) = bVal;
                 b = b + 1;
             else
-                % If current C value is less than bVal, use it
                 sorted(i) = cVal;
                 c = c + 1;
             end
             i = i + 1;
         end
     else
-        % set the return value to our sorted list
          sorted = A;
     end
 end

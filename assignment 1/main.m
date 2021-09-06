@@ -57,6 +57,59 @@ pause
 
 % -----Problem 3-----
 %TODO: Solve problem 3
+pGmax = max(pepperGrayIm, [], 'all');
+pGmin = min(pepperGrayIm, [], 'all');
+pGmean = mean(pepperGrayIm, 'all');
+pGmed = median(pepperGrayIm, 'all');
+
+[maxValue, minValue, meanValue, medianValue] = FindInfo(pepperGrayIm);
+
+if pGmax == maxValue
+    disp('maxValue returned expected result.');
+else
+    disp('maxValue did not return expected result.');
+end
+
+disp('Expected:');
+disp(pGmax);
+disp('Actual:');
+disp(maxValue);
+   
+
+
+if pGmin == minValue
+    disp('minValue returned expected result.');
+else
+    disp('minValue did not return expected result.');
+end
+
+disp('Expected:');
+disp(pGmin);    
+disp('Actual:');
+disp(minValue);
+
+if pGmean == meanValue
+    disp('meanValue returned expected result.');
+else
+    disp('meanValue did not return expected result.');
+end
+
+disp('Expected:');
+disp(pGmean);    
+disp('Actual:');
+disp(meanValue);
+
+if pGmed == medianValue
+    disp('medianValue returned expected result.');
+else
+    disp('medianValue did not return expected result.');
+end
+
+disp('Expected:');
+disp(pGmed);
+disp('Actual:');
+disp(medianValue);
+
 disp("-----Finish Solving Problem 3-----")
 pause
 
