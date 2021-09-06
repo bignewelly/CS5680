@@ -7,7 +7,7 @@ clear;
 % load image
 pepperIm = imread('peppers.bmp');
 
-f = figure();
+figure();
 
 imshow(pepperIm);
 title('RGB Original Image');
@@ -116,6 +116,35 @@ pause
 
 % -----Problem 4-----
 %TODO: Solve problem 4
+if maxValue > 0
+    pepperGrayImN = double(pepperGrayIm)./double(maxValue);
+else
+    pepperGrayImN = double(pepperGrayIm);
+end
+
+figure();
+
+imshow(pepperGrayImN);
+title('Normalized Grayscale Image');
+
+pepperGrayImP = pepperGrayImN;
+
+[row, col] = size(pepperGrayImP);
+rHalf = fix(row/2);
+cHalf = fix(col/2);
+
+% update 2nd quarter
+pepperGrayImP(1:rHalf, cHalf + 1:col) = pepperGrayImP(1:rHalf, cHalf + 1:col).^1.25;
+
+% update 3rd quarter
+pepperGrayImP(rHalf + 1:row, 1:cHalf) = pepperGrayImP(rHalf + 1:row, 1:cHalf).^0.75;
+
+figure();
+
+imshow(pepperGrayImP);
+title('Processed Grayscale Image');
+
+imwrite(pepperGrayImP, 'Jonathon_pepperGrayImP.jpg');
 disp("-----Finish Solving Problem 4-----")
 pause
 
