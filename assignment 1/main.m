@@ -56,7 +56,6 @@ pause
 
 
 % -----Problem 3-----
-%TODO: Solve problem 3
 pGmax = max(pepperGrayIm, [], 'all');
 pGmin = min(pepperGrayIm, [], 'all');
 pGmean = mean(pepperGrayIm, 'all');
@@ -197,7 +196,33 @@ disp("-----Finish Solving Problem 5-----")
 pause
 
 % -----Problem 6-----
-%TODO: Solve problem 6
+pepperImBlur = BlurImage(pepperIm, 4);
+
+pepperGrayImBlur = BlurImage(pepperGrayIm, 8);
+
+%display images
+figure();
+
+%display pepperIm in top left
+subplot(2,2,1);
+imshow(pepperIm);
+title('pepperIm');
+
+%display pepperGrayIm in top right
+subplot(2,2,2);
+imshow(pepperGrayIm);
+title('pepperGrayIm');
+
+%display pepperImBlur in bottom left
+subplot(2,2,3);
+imshow(pepperImBlur);
+title('pepperImBlur');
+
+%display pepperGrayImBlur in bottom right
+subplot(2,2,4);
+imshow(pepperGrayImBlur);
+title('pepperGrayImBlur');
+
 disp("-----Finish Solving Problem 6-----")
 pause
 
