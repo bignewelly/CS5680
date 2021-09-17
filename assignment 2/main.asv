@@ -17,7 +17,7 @@ scaling(foodIm, [255, 0]);
 [scaledFoodIm, transFunc] = scaling(foodIm, [0, 255]);
 
 figure();
-%TODO: show transFunc in graph
+%TODO: show trans
 imshow(scaledFoodIm);
 title('RGB Original Image');
 
