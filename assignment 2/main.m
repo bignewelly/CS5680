@@ -29,18 +29,31 @@ end
 meanValue = double(totalValue)/double(sizeOri);
 
 % -----Problem 1-----
-% TODO solve problem 1
 % Each of these should throw an exception:
-Scaling(foodIm, [0.1, 1.2]);
-Scaling(foodIm, [-255, -1]);
-Scaling(foodIm, [255, 0]);
+try
+    Scaling(foodIm, [0.1 1.2]);
+catch ex
+    disp(ex.message);
+end
+
+try
+    Scaling(foodIm, int16([-255 -1]));
+catch ex
+    disp(ex.message);
+end
+
+try
+    Scaling(foodIm, int16([255 0]));
+catch ex
+    disp(ex.message);
+end
 
 % Rescale the image to have a good quality range
-[scaledFoodIm, transFunc] = Scaling([foodIm, minValue, maxValue], [0, 255]);
+[scaledFoodIm, transFunc] = Scaling(foodIm, int16([0 255]));
 
 figure();
-%TODO: show transFunc in graph
-plot([minValue, maxValue], transFunc);
+
+plot((minValue: maxValue), transFunc);
 
 xlabel('Original Range');
 ylabel('Scaled Range');
