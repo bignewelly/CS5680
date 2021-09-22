@@ -8,25 +8,11 @@ foodIm = imread('Food.jpg');
 
 sizeOri = numel(foodIm);
 
-maxValue = 0;
-minValue = 255;
-totalValue = double(0);
-
-% Get maxValue, minValue, and totalValue
-for i = 1:sizeOri
-    if maxValue < foodIm(i)
-        maxValue = foodIm(i);
-    end
-
-    if minValue > foodIm(i)
-        minValue = foodIm(i);
-    end
-
-    totalValue = totalValue + double(foodIm(i));
-end
+maxValue = max(foodIm, [], 'all');
+minValue = min(foodIm, [], 'all');
 
 % calculate meanValue
-meanValue = double(totalValue)/double(sizeOri);
+meanValue = mean(foodIm, 'all');
 
 % -----Problem 1-----
 % Each of these should throw an exception:
@@ -62,7 +48,26 @@ disp("-----Finish Solving Problem 1-----")
 pause
 
 % -----Problem 2-----
-% TODO solve problem 2
+% get histograms
+hist = CalHist(scaledFoodIm, false);
+normHist = CalHist(scaledFoodIm, true);
+
+figure();
+
+%display historgram on the left
+subplot(1,2,1);
+bar(hist);
+title('Histogram');
+xlabel('Intensity Value');
+ylabel('Pixel Count');
+
+%display normalized histogram on top right
+subplot(1,2,2);
+bar(normHist);
+title('Normalized Histogram');
+xlabel('Intensity Value');
+ylabel('Pixel Count');
+
 disp("-----Finish Solving Problem 2-----")
 pause
 

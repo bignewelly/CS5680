@@ -15,19 +15,8 @@ function [scaledIm, transFunc] = Scaling(inputIm, range)
         throw(MException('myComponent:inputError','Second range value should be greater than first.'));
     end
     
-    oriMaxIntensity = 0;
-    oriMinIntensity = 255;
-
-    % Get min and max
-    for i = 1:numel(inputIm)
-        if oriMaxIntensity < inputIm(i)
-            oriMaxIntensity = inputIm(i);
-        end
-
-        if oriMinIntensity > inputIm(i)
-            oriMinIntensity = inputIm(i);
-        end
-    end
+    oriMaxIntensity = max(inputIm, [], 'all');
+    oriMinIntensity = min(inputIm, [], 'all');
 
     slope = double(range(2) - range(1))/double(oriMaxIntensity - oriMinIntensity);
     
