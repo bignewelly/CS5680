@@ -73,11 +73,46 @@ pause
 
 % -----Problem 3-----
 % TODO: Solve proglem 3
+tic
+[equalizedFoodIm, equalizedHist] = HistEqualization(foodIm);
+toc
+
+
 disp("-----Finish Solving Problem 3-----")
 pause
 
 % -----Problem 4-----
 % TODO solve problem 4
+[matLabEqualizedFoodIm, matLabEqualizedHist ]= histeq(foodIm);
+
+figure();
+
+%display pepperGrayIm in top left
+subplot(1,2,1);
+imshow(matLabEqualizedFoodIm);
+title('Matlab Equalized Image');
+
+%display pepperGrayImT in top right
+subplot(1,2,2);
+imshow(equalizedFoodIm);
+title('My Equalized Image');
+
+figure();
+
+%display matlab histogram on the left
+subplot(1,2,1);
+plot(matLabEqualizedHist);
+title('Matlab Equalized Function');
+xlabel('Original Image');
+ylabel('Processed Image');
+
+%display my normalized histogram function on top right
+subplot(1,2,2);
+plot(equalizedHist);
+title('My Equalized function');
+xlabel('Original Image');
+ylabel('Processed Image');
+
 disp("-----Finish Solving Problem 4-----")
 pause
 
