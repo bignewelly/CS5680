@@ -101,14 +101,18 @@ figure();
 
 %display matlab histogram on the left
 subplot(1,2,1);
-plot(matLabEqualizedHist);
+plot((0:255)/255, matLabEqualizedHist);
+axis([0 1 0 1]);
+axis padded;
 title('Matlab Equalized Function');
 xlabel('Original Image');
 ylabel('Processed Image');
 
 %display my normalized histogram function on top right
 subplot(1,2,2);
-plot(equalizedHist);
+plot((0:255)/255, equalizedHist);
+axis([0 1 0 1]);
+axis padded;
 title('My Equalized function');
 xlabel('Original Image');
 ylabel('Processed Image');
