@@ -14,7 +14,7 @@ function[enhancedIm, transFunc]= HistEqualization(inputIm)
 
     enhancedIm = inputIm;
     for i = 1:numel(enhancedIm)
-        enhancedIm(i) = 255 * cNH(inputIm(i));
+        enhancedIm(i) = 255 * cNH(inputIm(i) + 1);
     end
     
     transFunc = cNH;

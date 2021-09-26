@@ -72,18 +72,17 @@ disp("-----Finish Solving Problem 2-----")
 pause
 
 % -----Problem 3-----
-% TODO: Solve proglem 3
-tic
+tic;
 [equalizedFoodIm, equalizedHist] = HistEqualization(foodIm);
-toc
-
+toc;
 
 disp("-----Finish Solving Problem 3-----")
 pause
 
 % -----Problem 4-----
-% TODO solve problem 4
+tic;
 [matLabEqualizedFoodIm, matLabEqualizedHist ]= histeq(foodIm);
+toc;
 
 figure();
 
@@ -122,6 +121,23 @@ pause
 
 % -----Problem 5-----
 % TODO solve problem 5
+BBHEFoodIm = BBHE(foodIm);
+
+% get our metrics
+AMBEEq = abs(mean(foodIm, 'all') - mean(equalizedFoodIm, 'all'));
+AMBEBBHE = abs(mean(foodIm, 'all') - mean(BBHEFoodIm, 'all'));
+
+PSNREq = psnr(equalizedFoodIm, foodIm);
+PSNRBBHE = psnr(BBHEFoodIm, foodIm);
+
+entEq = entropy(equalizedFoodIm);
+entBBHE = entropy(BBHEFoodIm);
+
+disp(sprintf('\t\t HE \t BBHE'));
+disp(sprintf('AMBE\t %4.2f \t %4.2f', AMBEEq, AMBEBBHE));
+disp(sprintf('PSNR\t %4.2f \t %4.2f', PSNREq, PSNRBBHE));
+disp(sprintf('entropy\t %4.2f \t %4.2f', entEq, entBBHE));
+
 disp("-----Finish Solving Problem 5-----")
 pause
 
