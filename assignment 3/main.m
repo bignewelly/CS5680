@@ -6,8 +6,6 @@ clear;
 % load image
 
 % -----Problem 1-----
-% TODO: Solve Problem 1
-
 threeByThree = double([1 1 1; 1 2 1; 1 1 1]);
 threeByThree = threeByThree/sum(threeByThree, 'all');
 fiveByFive = double([1 1 1 1 1; 1 1 1 1 1; 1 1 1 1 1; 1 1 1 1 1; 1 1 1 1 1]);
@@ -41,6 +39,29 @@ pause
 
 % -----Problem 2-----
 % TODO: Solve Problem 2
+weighted3X3 = [1 2 1; 2 4 2; 1 2 1];
+standard3X3 = [1 1 1; 1 1 1; 1 1 1];
+
+medWeightedFiltCircuitIm = MedianFiltering(circuitIm, weighted3X3);
+medStandardFiltCircuitIm = MedianFiltering(circuitIm, standard3X3);
+
+%display images
+figure();
+
+%display circuitIm on the left
+subplot(1,3,1);
+imshow(circuitIm);
+title('Original Circuit Image');
+
+%display avgFilt3X3CircuitIm in top right
+subplot(1,3,2);
+imshow(medWeightedFiltCircuitIm);
+title('3X3 Weighted Filter');
+
+%display avgFilt5X5CircuitIm in bottom left
+subplot(1,3,3);
+imshow(medStandardFiltCircuitIm);
+title('3X3 Standard Filter');
 disp("-----Finish Solving Problem 2-----")
 pause
 

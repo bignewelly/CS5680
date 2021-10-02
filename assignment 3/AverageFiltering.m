@@ -2,7 +2,16 @@
 % Assignment 3
 
 function[filteredIm]= AverageFiltering(im, mask)     
+    [m, n] = size(mask);
+    
+    if ~(m == n)
+        throw(MException('myComponent:inputError', 'Mask should be square.'));
+    end
   
+    if (mod(m,2) == 0)
+        throw(MException('myComponent:inputError', 'Mask dimsension should be odd.'));
+    end
+    
     if mask < 0
         throw(MException('myComponent:inputError', 'All mask values should be positive.'));
     end
@@ -11,7 +20,6 @@ function[filteredIm]= AverageFiltering(im, mask)
         throw(MException('myComponent:inputError','Mask values should add up to 1.'));
     end
     
-    [m, n] = size(mask);
     for i = 1:m
         for j = 1:(n-i+1)
             if ~(mask(i,j) == mask(j,i))
