@@ -67,17 +67,56 @@ pause
 
 % -----Problem 3-----
 % TODO: Solve proglem 3
+strongFilter = double([1 1 1; 1 -8 1; 1 1 1]);
+
+moonIm = imread('Moon.jpg');
+
+filteredMoonIm = imfilter(double(moonIm), strongFilter);
+
+filteredMoonIm2 = filteredMoonIm;
+
+% set filteredMoonIm2 to max out at 255 and min out at 0 (no scaling)
+filteredMoonIm2(find(filteredMoonIm2 > 255)) = 255;
+filteredMoonIm2(find(filteredMoonIm2 < 0)) = 0;
+
+scaledFilteredMoonIm =uint8(double(filteredMoonIm - min(filteredMoonIm, [], 'all'))./double(max(filteredMoonIm, [], 'all') - min(filteredMoonIm, [], 'all')).*255);
+
+enhancedMoonIm = moonIm - uint8(filteredMoonIm);
+
+%TODO: display the four images
+%display images
+figure();
+
+%display circuitIm on the left
+subplot(2,2,1);
+imshow(moonIm);
+title('Original Moon Image');
+
+%display avgFilt3X3CircuitIm in top right
+subplot(2,2,2);
+imshow(filteredMoonIm2);
+title('Filtered Image');
+
+%display avgFilt5X5CircuitIm in bottom left
+subplot(2,2,3);
+imshow(scaledFilteredMoonIm);
+title('Scaled Filtered Image');
+
+%display avgFilt5X5CircuitIm in bottom left
+subplot(2,2,4);
+imshow(enhancedMoonIm);
+title('Enhanced Image');
+
 disp("-----Finish Solving Problem 3-----")
 pause
-
-% -----Problem 4-----
-% TODO solve problem 4
-disp("-----Finish Solving Problem 4-----")
+% -----Problem II-----
+% TODO solve Problem II
+disp("-----Finish Solving Problem II-----")
 pause
 
-% -----Problem 5-----
-% TODO solve problem 5
-disp("-----Finish Solving Problem 5-----")
+% -----Problem III-----
+% TODO solve problem III
+disp("-----Finish Solving Problem III-----")
 pause
 
 clear;

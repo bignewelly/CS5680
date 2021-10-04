@@ -31,7 +31,6 @@ function [filteredIm] = MedianFiltering(im, mask)
     maskTotal = sum(mask, 'all');
     valueList = zeros(1, maskTotal);
     
-    %TODO: get the median value after getting all the values
     for i = padM + 1: padM + imSize(1)
         for j = padN + 1: padN + imSize(2)
             index = 1;
