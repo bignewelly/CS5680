@@ -20,17 +20,17 @@ avgFilt5X5CircuitIm = AverageFiltering(circuitIm, fiveByFive);
 figure();
 
 %display circuitIm on the left
-subplot(1,3,1);
+subplot(2,1,1);
 imshow(circuitIm);
 title('Original Circuit Image');
 
 %display avgFilt3X3CircuitIm in top right
-subplot(1,3,2);
+subplot(2,2,3);
 imshow(avgFilt3X3CircuitIm);
 title('3X3 Weighted Filter');
 
 %display avgFilt5X5CircuitIm in bottom left
-subplot(1,3,3);
+subplot(2,2,4);
 imshow(avgFilt5X5CircuitIm);
 title('5X5 Standard Filter');
 
@@ -49,17 +49,17 @@ medStandardFiltCircuitIm = MedianFiltering(circuitIm, standard3X3);
 figure();
 
 %display circuitIm on the left
-subplot(1,3,1);
+subplot(2,1,1);
 imshow(circuitIm);
 title('Original Circuit Image');
 
 %display avgFilt3X3CircuitIm in top right
-subplot(1,3,2);
+subplot(2,2,3);
 imshow(medWeightedFiltCircuitIm);
 title('3X3 Weighted Filter');
 
 %display avgFilt5X5CircuitIm in bottom left
-subplot(1,3,3);
+subplot(2,2,4);
 imshow(medStandardFiltCircuitIm);
 title('3X3 Standard Filter');
 disp("-----Finish Solving Problem 2-----")
@@ -83,7 +83,6 @@ scaledFilteredMoonIm =uint8(double(filteredMoonIm - min(filteredMoonIm, [], 'all
 
 enhancedMoonIm = moonIm - uint8(filteredMoonIm);
 
-%TODO: display the four images
 %display images
 figure();
 
@@ -109,8 +108,31 @@ title('Enhanced Image');
 
 disp("-----Finish Solving Problem 3-----")
 pause
+
 % -----Problem II-----
 % TODO solve Problem II
+riceIm = imread('Rice.jpg');
+
+[riceEdgeIm, riceImHist] = FindEdgeInfo(riceIm, 20);
+
+%display images
+figure();
+
+%display circuitIm on the left
+subplot(2,1,1);
+imshow(riceIm);
+title('Original Rice Image');
+
+%display avgFilt3X3CircuitIm in top right
+subplot(2,2,3);
+imshow(riceEdgeIm);
+title('Important edges');
+
+%display avgFilt5X5CircuitIm in bottom left
+subplot(2,2,4);
+imshow(riceEdgeIm);
+title('edge Histogram');
+
 disp("-----Finish Solving Problem II-----")
 pause
 
