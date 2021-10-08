@@ -110,7 +110,6 @@ disp("-----Finish Solving Problem 3-----")
 pause
 
 % -----Problem II-----
-% TODO solve Problem II
 riceIm = imread('Rice.jpg');
 
 [riceEdgeIm, riceImHist] = FindEdgeInfo(riceIm, 20);
@@ -130,8 +129,11 @@ title('Important edges');
 
 %display avgFilt5X5CircuitIm in bottom left
 subplot(2,2,4);
-imshow(riceEdgeIm);
+bar(riceImHist);
 title('edge Histogram');
+title('Histogram');
+xlabel('Angels');
+ylabel('Pixel Count');
 
 disp("-----Finish Solving Problem II-----")
 pause
