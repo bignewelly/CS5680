@@ -137,9 +137,8 @@ disp("-----Finish Solving Problem II-----")
 pause;
 
 % -----Problem III-----
-% TODO solve problem III
 textIm = imread('Text.gif');
-[streaksRemovedTextIm, hPFilteredIm, scaledFilteredImGx, scaledFilteredImGy] = RemoveStreaks(textIm);
+[streaksRemovedTextIm, hPFilteredIm, scaledFilteredImGx, scaledFilteredImGy] = RemoveStreaks(textIm, 150);
 
 %display images
 figure();
@@ -165,7 +164,7 @@ imshow(scaledFilteredImGy);
 title('Filtered Gy');
 
 text1Im = imread('Text1.gif');
-[streaksRemovedText1Im, hPFiltered1Im, scaledFiltered1ImGx, scaledFiltered1ImGy] = RemoveStreaks(text1Im);
+[streaksRemovedText1Im, hPFiltered1Im, scaledFiltered1ImGx, scaledFiltered1ImGy] = RemoveStreaks(text1Im, 100);
 
 %display images
 figure();
