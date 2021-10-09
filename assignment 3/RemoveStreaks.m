@@ -19,7 +19,7 @@ function[enhancedIm, hPFilteredIm, scaledFilteredImGx, scaledFilteredImGy]= Remo
     scaledFilteredImGx =uint8(double(filteredImGx - min(filteredImGx, [], 'all'))./double(max(filteredImGx, [], 'all') - min(filteredImGx, [], 'all')).*255);
     scaledFilteredImGy =uint8(double(filteredImGy - min(filteredImGy, [], 'all'))./double(max(filteredImGy, [], 'all') - min(filteredImGy, [], 'all')).*255);
 
-    midRangeVals = find((im > 75 & im < 240) & (abs(filteredImGx) < 150 | abs(filteredImGy) < 150));
+    midRangeVals = find((im > 75 & im < 240) & (abs(filteredImGx) < 100 & abs(filteredImGy) < 100));
 
     enhancedIm = im;
     enhancedIm(midRangeVals) = 250;
