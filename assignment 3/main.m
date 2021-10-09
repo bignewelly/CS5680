@@ -35,10 +35,9 @@ imshow(avgFilt5X5CircuitIm);
 title('5X5 Standard Filter');
 
 disp("-----Finish Solving Problem 1-----")
-pause
+pause;
 
 % -----Problem 2-----
-% TODO: Solve Problem 2
 weighted3X3 = [1 2 1; 2 4 2; 1 2 1];
 standard3X3 = [1 1 1; 1 1 1; 1 1 1];
 
@@ -63,10 +62,9 @@ subplot(2,2,4);
 imshow(medStandardFiltCircuitIm);
 title('3X3 Standard Filter');
 disp("-----Finish Solving Problem 2-----")
-pause
+pause;
 
 % -----Problem 3-----
-% TODO: Solve proglem 3
 strongFilter = double([1 1 1; 1 -8 1; 1 1 1]);
 
 moonIm = imread('Moon.jpg');
@@ -107,7 +105,7 @@ imshow(enhancedMoonIm);
 title('Enhanced Image');
 
 disp("-----Finish Solving Problem 3-----")
-pause
+pause;
 
 % -----Problem II-----
 riceIm = imread('Rice.jpg');
@@ -136,12 +134,38 @@ xlabel('Angels');
 ylabel('Pixel Count');
 
 disp("-----Finish Solving Problem II-----")
-pause
+pause;
 
 % -----Problem III-----
 % TODO solve problem III
+textIm = imread('Text1.gif');
+[streaksRemovedTextIm, hPFilteredIm, scaledFilteredIm, scaledFilteredHiLoIm] = RemoveStreaks(textIm);
+
+%display images
+figure();
+
+%display Text.gif on the left
+subplot(2,2,1);
+imshow(textIm);
+title('Original Text Image');
+
+%display streaksRemovedTextIm in top right
+subplot(2,2,2);
+imshow(streaksRemovedTextIm);
+title('Filtered Image');
+
+%display streaksRemovedTextIm in top right
+subplot(2,2,3);
+imshow(scaledFilteredIm);
+title('Filtered Image');
+
+%display hPFilteredIm in top right
+subplot(2,2,4);
+imshow(scaledFilteredHiLoIm);
+title('High Pass Filter');
+
 disp("-----Finish Solving Problem III-----")
-pause
+pause;
 
 clear;
 close all;

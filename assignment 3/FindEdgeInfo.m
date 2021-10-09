@@ -15,7 +15,6 @@ function[edges, edgeHist]= FindEdgeInfo(im, bin)
     for i = 1 : numel(arctanIm)
         binID = uint16((arctanIm(i) - minArctIm)/binSize) + 1;
         if binID > numel(edgeHist)
-            disp(binID);
             throw(MException('myComponent:error','Mask must be symmetrical around the center.'));
         end
         edgeHist(binID) = edgeHist(binID) + 1;
