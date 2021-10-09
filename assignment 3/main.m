@@ -138,8 +138,8 @@ pause;
 
 % -----Problem III-----
 % TODO solve problem III
-textIm = imread('Text1.gif');
-[streaksRemovedTextIm, hPFilteredIm, scaledFilteredIm, scaledFilteredHiLoIm] = RemoveStreaks(textIm);
+textIm = imread('Text.gif');
+[streaksRemovedTextIm, hPFilteredIm, scaledFilteredImGx, scaledFilteredImGy] = RemoveStreaks(textIm);
 
 %display images
 figure();
@@ -154,15 +154,41 @@ subplot(2,2,2);
 imshow(streaksRemovedTextIm);
 title('Filtered Image');
 
+%display scaledFilteredImGx in top right
+subplot(2,2,3);
+imshow(scaledFilteredImGx);
+title('Filtered Gx');
+
+%display scaledFilteredImGy in top right
+subplot(2,2,4);
+imshow(scaledFilteredImGy);
+title('Filtered Gy');
+
+text1Im = imread('Text1.gif');
+[streaksRemovedText1Im, hPFiltered1Im, scaledFiltered1ImGx, scaledFiltered1ImGy] = RemoveStreaks(text1Im);
+
+%display images
+figure();
+
+%display Text.gif on the left
+subplot(2,2,1);
+imshow(text1Im);
+title('Original Text Image');
+
+%display streaksRemovedTextIm in top right
+subplot(2,2,2);
+imshow(streaksRemovedText1Im);
+title('Filtered Image');
+
 %display streaksRemovedTextIm in top right
 subplot(2,2,3);
-imshow(scaledFilteredIm);
-title('Filtered Image');
+imshow(scaledFiltered1ImGx);
+title('Filtered Gx');
 
 %display hPFilteredIm in top right
 subplot(2,2,4);
-imshow(scaledFilteredHiLoIm);
-title('High Pass Filter');
+imshow(scaledFiltered1ImGy);
+title('Filtered Gy');
 
 disp("-----Finish Solving Problem III-----")
 pause;

@@ -1,7 +1,11 @@
 % Jonathon Pearson
 % Assignment 3
 
-function[enhancedIm, hPFilteredIm, scaledFilteredIm, scaledFilteredHiLoIm]= RemoveStreaks(im)
+function[enhancedIm, hPFilteredIm, scaledFilteredImGx, scaledFilteredImGy]= RemoveStreaks(im)
+
+    filteredImGx = imfilter(double(im), [-1; 0; 1]);
+    filteredImGy = imfilter(double(im), [-1 0 1]);
+
 
     %TODO:  I need to do a filter based on the high pass filter.  I want to
     %keep only the drastic changes.  If anything is too gradual, replace
@@ -11,18 +15,13 @@ function[enhancedIm, hPFilteredIm, scaledFilteredIm, scaledFilteredHiLoIm]= Remo
     strongFilter = double([1 1 1; 1 -8 1; 1 1 1]);
 
     hPFilteredIm = imfilter(double(im), strongFilter);
+       
+    scaledFilteredImGx =uint8(double(filteredImGx - min(filteredImGx, [], 'all'))./double(max(filteredImGx, [], 'all') - min(filteredImGx, [], 'all')).*255);
+    scaledFilteredImGy =uint8(double(filteredImGy - min(filteredImGy, [], 'all'))./double(max(filteredImGy, [], 'all') - min(filteredImGy, [], 'all')).*255);
 
-    hPFilteredHighLow = zeros(size(hPFilteredIm));
-   
-    highLowValues = find(abs(hPFilteredIm) > 255 | im > 250 | im < 100);
-    
-    hPFilteredHighLow(highLowValues) = hPFilteredIm(highLowValues);
+    midRangeVals = find((im > 75 & im < 240) & (abs(filteredImGx) < 150 | abs(filteredImGy) < 150));
 
-    scaledFilteredIm =uint8(double(hPFilteredIm - min(hPFilteredIm, [], 'all'))./double(max(hPFilteredIm, [], 'all') - min(hPFilteredIm, [], 'all')).*255);
-    scaledFilteredHiLoIm =uint8(double(hPFilteredHighLow - min(hPFilteredHighLow, [], 'all'))./double(max(hPFilteredHighLow, [], 'all') - min(hPFilteredHighLow, [], 'all')).*255);
-
-    
-    enhancedIm = uint8(ones(size(im)))*max(im, [], 'all');
-    enhancedIm(highLowValues) = im(highLowValues);
+    enhancedIm = im;
+    enhancedIm(midRangeVals) = 250;
 end
 

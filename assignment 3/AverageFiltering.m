@@ -22,7 +22,7 @@ function[filteredIm]= AverageFiltering(im, mask)
     
     for i = 1:m
         for j = 1:(n-i+1)
-            if ~(mask(i,j) == mask(j,i))
+            if ~(mask(i,j) == mask(m - i + 1, n - j + 1))
                 throw(MException('myComponent:inputError','Mask must be symmetrical around the center.'));
             end
         end
