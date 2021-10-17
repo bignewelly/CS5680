@@ -4,7 +4,6 @@
 clear;
 
 % -----Problem I-----
-% Problem I - 1
 sampleIm = imread('Sample.jpg');
 
 cFSampleIm = fftshift(fft2(sampleIm));
@@ -31,11 +30,9 @@ for u = 1:M
     end
 end
 
+% Problem I - 1
 % apply Guassian low-pass filter
 gFilteredSampleIm = uint8(real(ifft2(ifftshift(cFSampleIm .* gFilter))));
-
-% apply butterworth hight-pass filter
-bWFilteredSampleIm = uint8(real(ifft2(ifftshift(cFSampleIm .* bWFilter))));
 
 % display images
 figure();
@@ -54,6 +51,10 @@ title('Gaussian Filter');
 subplot(2,2,4);
 imshow(gFilteredSampleIm);
 title('Filtered Image');
+
+% Problem I - 2
+% apply butterworth hight-pass filter
+bWFilteredSampleIm = uint8(real(ifft2(ifftshift(cFSampleIm .* bWFilter))));
 
 %display images
 figure();
