@@ -4,21 +4,40 @@
 clear;
 
 % -----Problem I-----
-%TODO: Solve Problem I
 % Problem I - 1
 sampleIm = imread('Sample.jpg');
 
 cFSampleIm = fftshift(fft2(sampleIm));
 
-%TODO: apply Guassian low-pass filter
-gFilter = ones(size(sampleIm));
-gFilteredSampleIm = uint8(real(ifft2(ifftshift(cFSampleIm))));
+gFilter = zeros(size(sampleIm));
+bWFilter = zeros(size(sampleIm));
 
-%TODO: apply butterworth hight-pass filter
-bWFilter = ones(size(sampleIm));
-bWFilteredSampleIm = uint8(real(ifft2(ifftshift(cFSampleIm))));
+%get Gaussian low-pass filter
+[M, N] = size(sampleIm);
+D0sqrd = 25*75;
+D0sqrd2 = 50^2;
+e = exp(1);
+for u = 1:M
+    for v = 1: N
+        % Get the distance from origin
+        Dsqrd = (u - (M/2 + 1))^2 + (v - (N/2 + 1))^2;
+        
+        % Set Gaussian filter
+        gFilter(u,v) = e^(-Dsqrd/(2*D0sqrd));
+        
+        % Set butterworth filter
+        bWFilter(u,v) = 1/(1 +(D0sqrd2/Dsqrd)^2);
+        
+    end
+end
 
-%display images
+% apply Guassian low-pass filter
+gFilteredSampleIm = uint8(real(ifft2(ifftshift(cFSampleIm .* gFilter))));
+
+% apply butterworth hight-pass filter
+bWFilteredSampleIm = uint8(real(ifft2(ifftshift(cFSampleIm .* bWFilter))));
+
+% display images
 figure();
 
 %display sampleIm on the top
