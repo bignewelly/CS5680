@@ -84,21 +84,15 @@ pause;
 capitolIm = imread('Capitol.jpg');
 cFCapitolIm = fftshift(fft2(capitolIm));
 
-% get real and imaginary componants of frequency domain
-realSampleIm = real(cFSampleIm);
-imagSampleIm = imag(cFSampleIm);
-
 % get magnitude and phase of frequency domain
-fMagSampleIm = sqrt(realSampleIm.^2 + imagSampleIm.^2);
-fPhaseSampleIm = atan(imagSampleIm./realSampleIm);
-
-% get real and imaginary componants of frequency domain
-realCapitolIm = real(cFCapitolIm);
-imagCapitolIm = imag(cFCapitolIm);
+fMagSampleIm = abs(cFSampleIm);
+fPhaseSampleIm = angle(cFSampleIm);
 
 % get maginitude and phase
-fMagCapitolIm = sqrt(realCapitolIm.^2 + imagCapitolIm.^2);
-fPhaseCapitolIm = atan(imagCapitolIm./realCapitolIm);
+%call abs
+fMagCapitolIm = abs(cFCapitolIm);
+%call angle
+fPhaseCapitolIm = angle(cFCapitolIm);
 
 realMagSampleIM = real(log(fMagSampleIm));
 realPhaseSampleIm = real(fPhaseSampleIm);
@@ -135,8 +129,8 @@ title('Phase of Capitol.jpg');
 
 % -----Problem II-2-----
 % reconstruct images with switched magnitudes
-magSwitchCapitolIm = uint8(real(ifft2(ifftshift(fMagSampleIm .* e.^(fPhaseSampleIm.*1i)))));
-magSwitchSampleIm = uint8(real(ifft2(ifftshift(fMagCapitolIm .* e.^(fPhaseSampleIm.*1i)))));
+magSwitchCapitolIm = uint8(real(ifft2(ifftshift(fMagSampleIm .* exp(fPhaseCapitolIm.*1i)))));
+magSwitchSampleIm = uint8(real(ifft2(ifftshift(fMagCapitolIm .* exp(fPhaseSampleIm.*1i)))));
 
 %display images
 figure();
