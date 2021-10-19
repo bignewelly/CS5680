@@ -79,11 +79,86 @@ pause;
 
 % -----Problem II-----
 %TODO: Solve Problem II
+
+% -----Problem II-1-----
+capitolIm = imread('Capitol.jpg');
+cFCapitolIm = fftshift(fft2(capitolIm));
+
+% get real and imaginary componants of frequency domain
+realSampleIm = real(cFSampleIm);
+imagSampleIm = imag(cFSampleIm);
+
+% get magnitude and phase of frequency domain
+fMagSampleIm = sqrt(realSampleIm.^2 + imagSampleIm.^2);
+fPhaseSampleIm = atan(imagSampleIm./realSampleIm);
+
+% get real and imaginary componants of frequency domain
+realCapitolIm = real(cFCapitolIm);
+imagCapitolIm = imag(cFCapitolIm);
+
+% get maginitude and phase
+fMagCapitolIm = sqrt(realCapitolIm.^2 + imagCapitolIm.^2);
+fPhaseCapitolIm = atan(imagCapitolIm./realCapitolIm);
+
+realMagSampleIM = real(log(fMagSampleIm));
+realPhaseSampleIm = real(fPhaseSampleIm);
+realMagCapitolIm = real(log(fMagCapitolIm));
+realPhaseCapitolIm = real(fPhaseCapitolIm);
+
+scaledFMagSampleIm =uint8(double(realMagSampleIM - min(realMagSampleIM, [], 'all'))./double(max(realMagSampleIM, [], 'all') - min(realMagSampleIM, [], 'all')).*255);
+scaledFPhaseSampleIm =uint8(double(realPhaseSampleIm - min(realPhaseSampleIm, [], 'all'))./double(max(realPhaseSampleIm, [], 'all') - min(realPhaseSampleIm, [], 'all')).*255);
+scaledFMagCapitolIm =uint8(double(realMagCapitolIm - min(realMagCapitolIm, [], 'all'))./double(max(realMagCapitolIm, [], 'all') - min(realMagCapitolIm, [], 'all')).*255);
+scaledFPhaseCapitolIm =uint8(double(realPhaseCapitolIm - min(realPhaseCapitolIm, [], 'all'))./double(max(realPhaseCapitolIm, [], 'all') - min(realPhaseCapitolIm, [], 'all')).*255);
+
+%display images
+figure();
+
+%display scaledFMagSampleIm on the top left
+subplot(2,2,1);
+imshow(scaledFMagSampleIm);
+title('Maginitude of Sample.jpg');
+
+%display scaledFPhaseSampleIm in top right
+subplot(2,2,2);
+imshow(scaledFPhaseSampleIm);
+title('Phase of Sample.jpg');
+
+%display scaledFMagCapitolIm on the top left
+subplot(2,2,3);
+imshow(scaledFMagCapitolIm);
+title('Maginitude of Capitol.jpg');
+
+%display scaledFPhaseCapitolIm in top right
+subplot(2,2,4);
+imshow(scaledFPhaseCapitolIm);
+title('Phase of Capitol.jpg');
+
+% -----Problem II-2-----
+% reconstruct images with switched magnitudes
+magSwitchCapitolIm = uint8(real(ifft2(ifftshift(fMagSampleIm .* e.^(fPhaseSampleIm.*1i)))));
+magSwitchSampleIm = uint8(real(ifft2(ifftshift(fMagCapitolIm .* e.^(fPhaseSampleIm.*1i)))));
+
+%display images
+figure();
+
+%display magSwitchCapitolIm on the left
+subplot(1,2,1);
+imshow(magSwitchCapitolIm);
+title('New Capitol Image');
+
+%display magSwitchSampleIm in top right
+subplot(1,2,2);
+imshow(magSwitchSampleIm);
+title('New Sample Image');
+
 disp("-----Finish Solving Problem II-----")
 pause;
-
 % -----Problem III-----
 %TODO: Solve Problem III
+boyNoisyIm = imread('boy_noisy.gif');
+
+
+
 disp("-----Finish Solving Problem III-----")
 pause;
 
