@@ -13,7 +13,8 @@ bWFilter = zeros(size(sampleIm));
 
 %get Gaussian low-pass filter
 [M, N] = size(sampleIm);
-D0sqrd = 25*75;
+uD0sqrd = 75^2;
+vD0sqrd = 25^2;
 D0sqrd2 = 50^2;
 e = exp(1);
 for u = 1:M
@@ -22,7 +23,7 @@ for u = 1:M
         Dsqrd = (u - (M/2 + 1))^2 + (v - (N/2 + 1))^2;
         
         % Set Gaussian filter
-        gFilter(u,v) = e^(-Dsqrd/(2*D0sqrd));
+        gFilter(u,v) = exp(-(((u - (M/2 + 1))^2)/(2*uD0sqrd) + ((v - (N/2 + 1))^2)/(2*vD0sqrd)));
         
         % Set butterworth filter
         bWFilter(u,v) = 1/(1 +(D0sqrd2/Dsqrd)^2);
