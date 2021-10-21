@@ -79,8 +79,6 @@ disp("-----Finish Solving Problem I-----")
 pause;
 
 % -----Problem II-----
-%TODO: Solve Problem II
-
 % -----Problem II-1-----
 capitolIm = imread('Capitol.jpg');
 cFCapitolIm = fftshift(fft2(capitolIm));
@@ -140,7 +138,54 @@ pause;
 %TODO: Solve Problem III
 boyNoisyIm = imread('boy_noisy.gif');
 
+denoised4BoyNoisyIm = Denoise(boyNoisyIm, 4);
 
+%display images
+figure();
+
+%display boyNoisyIm on the left
+subplot(1,2,1);
+imshow(boyNoisyIm);
+title('Original Boy Image');
+
+%display magSwitchSampleIm in top right
+subplot(1,2,2);
+imshow(real(denoised4BoyNoisyIm), []);
+title('Denoised Image');
+
+denoised2BoyNoisyIm = Denoise(boyNoisyIm, 2);
+denoised3BoyNoisyIm = Denoise(boyNoisyIm, 3);
+denoised5BoyNoisyIm = Denoise(boyNoisyIm, 5);
+denoised6BoyNoisyIm = Denoise(boyNoisyIm, 6);
+
+%display images
+figure();
+
+%display denoised2BoyNoisyIm on the top left
+subplot(2,2,1);
+imshow(real(denoised2BoyNoisyIm), []);
+title('Removed top 2');
+
+%display denoised3BoyNoisyIm in top right
+subplot(2,2,2);
+imshow(real(denoised3BoyNoisyIm), []);
+title('Removed top 3');
+
+%display denoised5BoyNoisyIm on the bottom left
+subplot(2,2,3);
+imshow(real(denoised5BoyNoisyIm), []);
+title('Removed top 5');
+
+%display denoised6BoyNoisyIm in top right
+subplot(2,2,4);
+imshow(real(denoised6BoyNoisyIm), []);
+title('Removed top 6');
+
+disp('It seems that as we remove more of the higher magnitude values,');
+disp('the picture looses some of its contrast. The image that we removed');
+disp('the two highest magnitudes removed the noise, but left plenty of');
+disp('contrast.  As we go higher the contrast is removed in places and');
+disp('causes a wave affect.');
 
 disp("-----Finish Solving Problem III-----")
 pause;
