@@ -10,7 +10,7 @@ function[denoisedIm]= Denoise(im, topFrequencies)
     % Find the locations of the 4 largest images
     magCfIm = abs(cfIm);
     
-    magCfIm(end/2:end/2+1, end/2:end/2+1) = 0;
+    %magCfIm(end/2:(end/2)+1, end/2:(end/2)+1) = 0;
 
     maxVals = zeros(1, topFrequencies + 1);
         

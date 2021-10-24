@@ -135,7 +135,6 @@ title('New Sample Image');
 disp("-----Finish Solving Problem II-----")
 pause;
 % -----Problem III-----
-%TODO: Solve Problem III
 boyNoisyIm = imread('boy_noisy.gif');
 
 denoised4BoyNoisyIm = Denoise(boyNoisyIm, 4);
@@ -192,6 +191,91 @@ pause;
 
 % -----Problem IV-----
 %TODO: Solve Problem IV
+lenaIm = imread('Lena.jpg');
+
+% Problem IV-1
+lev = wmaxlev(size(lenaIm), 'db2');
+[cLenaIm, sLenaIm] = wavedec2(lenaIm, lev, 'db2');
+recLenaIm = uint8(waverec2(cLenaIm,sLenaIm,'db2'));
+
+if lenaIm == recLenaIm
+    disp('Original and reconstructed image are identical.');
+else
+    disp('Original and reconstructed image are note the same.');
+end
+
+% Problem IV-2
+[c3LenaIm, s3LenaIm] = wavedec2(lenaIm, 3, 'db2');
+app3LenaIm = appcoef2(c3LenaIm,s3LenaIm,'db2',3);
+
+% a
+blurApp3LenaIm = BlurImage(app3LenaIm, 2);
+
+% Reconstruct mage
+a = blurApp3LenaIm;
+[h,v,d] = detcoef2('all',c3LenaIm,s3LenaIm,3);
+a = idwt2(a,h,v,d,'db2');
+n = 2;
+while n > 0
+    [h,v,d] = detcoef2('all',c3LenaIm, s3LenaIm,n);
+    a = idwt2(a,h,v,d,'db2');
+    
+    n = n - 1;
+end
+
+recBlurLenaIm = a;
+
+disp('size(recBlurLenaIm):');
+disp(size(recBlurLenaIm));
+
+%display recBlurLenaIm
+figure();
+imshow(recBlurLenaIm, []);
+title('2X2 averaged');
+
+% b
+app1LenaIm = appcoef2(c3LenaIm,s3LenaIm,'db2',1);
+[h1,v1,d1] = detcoef2('all',c3LenaIm,s3LenaIm,1);
+
+v1 = zeros(size(v1));
+
+alteredV1LenaIm = idwt2(app1LenaIm,h1,v1,d1,'db2');
+
+disp('size(alteredV1LenaIm):');
+disp(size(alteredV1LenaIm));
+
+%display alteredV1LenaIm
+figure();
+imshow(alteredV1LenaIm, []);
+title('V1 Set to 0');
+
+% c
+[h3,v3,d3] = detcoef2('all',c3LenaIm,s3LenaIm,3);
+
+d3 = zeros(size(d3));
+
+% Reconstruct mage
+d = d3;
+a = idwt2(app3LenaIm,h3,v3,d3,'db2');
+
+n = 2;
+while n > 0
+    [h,v,d] = detcoef2('all',c3LenaIm,s3LenaIm,n);
+
+    a = idwt2(a,h,v,d,'db2');
+    n = n - 1;
+end
+
+alteredD3LenaIm = a;
+
+disp('size(alteredD3LenaIm):');
+disp(size(alteredD3LenaIm));
+
+%display alteredD3LenaIm
+figure();
+imshow(real(alteredD3LenaIm), []);
+title('V3 Set to 0');
+
 disp("-----Finish Solving Problem IV-----")
 pause;
 
