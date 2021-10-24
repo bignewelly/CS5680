@@ -268,6 +268,60 @@ pause;
 
 % -----Problem V-----
 %TODO: Solve Problem V
+%step 1:
+noisyLenaIm = imnoise(lenaIm, 'gaussian', 0);
+
+%step 2:
+[c3NoisyLenaIm, s3NoisyLenaIm] = wavedec2(lenaIm, 3, 'db2');
+
+%steps 3 - 5:
+[h1, v1, d1] = detcoef2('all',c3NoisyLenaIm,s3NoisyLenaIm,1);
+subbands1 = ModifyWaveltCoefficents([h1, v1, d1]);
+[m, n] = size(h1);
+h1 = subbands1(:, 1:m);
+v1 = subbands1(:, m+1:2*m);
+d1 = subbands1(:, 2*m+1:3*m);
+
+%step 6:
+[h2, v2, d2] = detcoef2('all',c3NoisyLenaIm,s3NoisyLenaIm,2);
+subbands2 = ModifyWaveltCoefficents([h2, v2, d2]);
+[m, n] = size(h2);
+h2 = subbands2(:, 1:m);
+v2 = subbands2(:, m+1:2*m);
+d2 = subbands2(:, 2*m+1:3*m);
+
+%step 7:
+[h3, v3, d3] = detcoef2('all',c3NoisyLenaIm,s3NoisyLenaIm,3);
+subbands3 = ModifyWaveltCoefficents([h3, v3, d3]);
+[m, n] = size(h3);
+h3 = subbands3(:, 1:m);
+v3 = subbands3(:, m+1:2*m);
+d3 = subbands3(:, 2*m+1:3*m);
+
+%step 8:
+app3NoisyLenaIm = appcoef2(c3NoisyLenaIm,s3NoisyLenaIm,'db2',3);
+
+app2NoisyLenaIm = idwt2(app3NoisyLenaIm, h3, v3, d3,'db2');
+
+app1NoisyLenaIm = idwt2(app2NoisyLenaIm, h2, v2, d2,'db2');
+
+[m, n] = size(h1);
+
+deNoisyLenaIm = idwt2(app1NoisyLenaIm(1:m, 1:m), h1, v1, d1,'db2');
+
+%display images
+figure();
+
+%display noisyLenaIm on the left
+subplot(1,2,1);
+imshow(noisyLenaIm, []);
+title('Noisy Lena.jpg');
+
+%display deNoisyLenaIm on the right
+subplot(1,2,2);
+imshow(deNoisyLenaIm, []);
+title('Denoised Lena.jpg');
+
 disp("-----Finish Solving Problem V-----")
 pause;
 
