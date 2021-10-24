@@ -1,3 +1,6 @@
+% Jonathon Pearson
+% Assignment 4
+
 function [alteredSubbands] = ModifyWaveltCoefficents(subbands)
     %step 3
     var = median(subbands, 'all')/0.6745;

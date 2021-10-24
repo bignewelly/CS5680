@@ -190,7 +190,6 @@ disp("-----Finish Solving Problem III-----")
 pause;
 
 % -----Problem IV-----
-%TODO: Solve Problem IV
 lenaIm = imread('Lena.jpg');
 
 % Problem IV-1
@@ -267,7 +266,6 @@ disp("-----Finish Solving Problem IV-----")
 pause;
 
 % -----Problem V-----
-%TODO: Solve Problem V
 %step 1:
 noisyLenaIm = imnoise(lenaIm, 'gaussian', 0);
 

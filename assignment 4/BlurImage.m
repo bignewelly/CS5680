@@ -1,5 +1,5 @@
 % Jonathon Pearson
-% Assignment 1
+% Assignment 4
 
 function [blurredIm]=  BlurImage(oriIm,  blocksize)
     [row, col, depth] = size(oriIm);
