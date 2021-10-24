@@ -241,7 +241,7 @@ title('V1 Set to 0');
 
 % c
 filteredC3LenaIm = c3LenaIm;
-filteredC3LenaIm(end - s(1)*s(2) + 1: end) = 0;
+filteredC3LenaIm(3*s(1)*s(2) + 1: 4*s(1)*s(2)) = 0;
 
 alteredD3LenaIm = uint8(waverec2(filteredC3LenaIm,s3LenaIm,'db2'));
 
@@ -249,6 +249,19 @@ alteredD3LenaIm = uint8(waverec2(filteredC3LenaIm,s3LenaIm,'db2'));
 figure();
 imshow(alteredD3LenaIm, []);
 title('D3 Set to 0');
+
+disp('a) The difference between the image in a and Lena.jpg is that it');
+disp('it looks like a pixelated version of Lena, but smeared.  This is');
+disp('because we pixelatint he level 3 approximation but we keep the');
+disp('the change info the same.');
+disp('b) The Diffence between the the image in b and Lena.jpg is subtle.');
+disp('Only some of the values get blurred where there are horizontal');
+disp('changes.');
+disp('c) The Diffence between the the image in c and Lena.jpg is .');
+disp('that some of the changes in the diagonal direction are blurred.');
+disp('This is because we are getting rid of some of the change info in ');
+disp('the diagonal.');
+
 
 disp("-----Finish Solving Problem IV-----")
 pause;
