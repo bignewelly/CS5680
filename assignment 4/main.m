@@ -205,32 +205,21 @@ else
 end
 
 % Problem IV-2
+s = size(lenaIm)/8;
 [c3LenaIm, s3LenaIm] = wavedec2(lenaIm, 3, 'db2');
-app3LenaIm = appcoef2(c3LenaIm,s3LenaIm,'db2',3);
 
 % a
-blurApp3LenaIm = BlurImage(app3LenaIm, 2);
+app3LenaIm = c3LenaIm(1:s(1)*s(2));
+blurApp3LenaIm = BlurImage(reshape(app3LenaIm, s), 2);
+filteredC3LenaIm = c3LenaIm;
+filteredC3LenaIm(1:s(1)*s(2)) = reshape(blurApp3LenaIm, 1, s(1)*s(2));
 
-% Reconstruct mage
-a = blurApp3LenaIm;
-[h,v,d] = detcoef2('all',c3LenaIm,s3LenaIm,3);
-a = idwt2(a,h,v,d,'db2');
-n = 2;
-while n > 0
-    [h,v,d] = detcoef2('all',c3LenaIm, s3LenaIm,n);
-    a = idwt2(a,h,v,d,'db2');
-    
-    n = n - 1;
-end
+alterdA3LenaIm = uint8(waverec2(filteredC3LenaIm,s3LenaIm,'db2'));;
 
-recBlurLenaIm = a;
 
-disp('size(recBlurLenaIm):');
-disp(size(recBlurLenaIm));
-
-%display recBlurLenaIm
+%display alterdA3LenaIm
 figure();
-imshow(recBlurLenaIm, []);
+imshow(alterdA3LenaIm, []);
 title('2X2 averaged');
 
 % b
@@ -239,10 +228,11 @@ app1LenaIm = appcoef2(c3LenaIm,s3LenaIm,'db2',1);
 
 v1 = zeros(size(v1));
 
-alteredV1LenaIm = idwt2(app1LenaIm,h1,v1,d1,'db2');
+alteredV1LenaIm = uint8(idwt2(app1LenaIm,h1,v1,d1,'db2'));
 
-disp('size(alteredV1LenaIm):');
-disp(size(alteredV1LenaIm));
+if lenaIm == alteredV1LenaIm
+    disp('Original and alteredV1LenaIm image are identical.');
+end
 
 %display alteredV1LenaIm
 figure();
@@ -250,31 +240,15 @@ imshow(alteredV1LenaIm, []);
 title('V1 Set to 0');
 
 % c
-[h3,v3,d3] = detcoef2('all',c3LenaIm,s3LenaIm,3);
+filteredC3LenaIm = c3LenaIm;
+filteredC3LenaIm(end - s(1)*s(2) + 1: end) = 0;
 
-d3 = zeros(size(d3));
-
-% Reconstruct mage
-d = d3;
-a = idwt2(app3LenaIm,h3,v3,d3,'db2');
-
-n = 2;
-while n > 0
-    [h,v,d] = detcoef2('all',c3LenaIm,s3LenaIm,n);
-
-    a = idwt2(a,h,v,d,'db2');
-    n = n - 1;
-end
-
-alteredD3LenaIm = a;
-
-disp('size(alteredD3LenaIm):');
-disp(size(alteredD3LenaIm));
+alteredD3LenaIm = uint8(waverec2(filteredC3LenaIm,s3LenaIm,'db2'));
 
 %display alteredD3LenaIm
 figure();
-imshow(real(alteredD3LenaIm), []);
-title('V3 Set to 0');
+imshow(alteredD3LenaIm, []);
+title('D3 Set to 0');
 
 disp("-----Finish Solving Problem IV-----")
 pause;
