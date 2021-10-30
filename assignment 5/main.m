@@ -97,7 +97,29 @@ subplot(1,2,2);
 imshow(clOpDowelsIm);
 title('Close-Open Series');
 
-disp("-----Finish Solving Problem II-----")
+% problem 3
+smallSquaresIm = imread('SmallSquares.tif');
+
+posStrEl = [0 1 0; 0 1 1; 0 0 0];
+negStrEl = [1 0 0; 1 0 0; 1 1 1];
+
+postiveMatch = imerode(smallSquaresIm, posStrEl);
+negativeMatch = imerode(~smallSquaresIm, negStrEl);
+
+filteredImage = postiveMatch & negativeMatch;
+
+% display images
+figure();
+
+%display filteredImage
+imshow(filteredImage);
+title('Filtered SmallSquares.tif');
+
+disp('Number of forground pixels in filtered image:');
+disp(numel(find(filteredImage)));
+
+
+disp("-----Finish Solving Problem I-----")
 pause;
 
 % -----Problem II-----
