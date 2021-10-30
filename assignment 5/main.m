@@ -4,8 +4,6 @@
 clear;
 
 % -----Problem I-----
-%TODO: Solve Problem I
-
 %Problem 1
 wirebondIm = imread('Wirebond.tif');
 
@@ -124,6 +122,39 @@ pause;
 
 % -----Problem II-----
 %TODO: Solve Problem II
+ballIm = imread('Ball.tif');
+
+%problem 1
+[labeledBallIm, ballNum] = FindComponentLabels(ballIm, [0 1 0; 1 1 1; 0 1 0]);
+
+% display images
+figure();
+
+%display labeledBallIm
+imshow(labeledBallIm, []);
+title('Labeled Ball.tif');
+
+disp('Total connected objects:');
+disp(ballNum);
+%problem 2
+mlLabeledBallIm = bwlabel(ballIm, 4);
+ballConn = bwconncomp(ballIm, 4);
+ 
+% display images
+figure();
+
+%display mlLabeledBallIm
+imshow(mlLabeledBallIm, []);
+title('Matlab Labeled Ball.tif');
+
+disp('Total connected objects:');
+disp(ballConn.NumObjects);
+%problem 3
+
+%problem 4
+
+%problem 5
+
 disp("-----Finish Solving Problem II-----")
 pause;
 
