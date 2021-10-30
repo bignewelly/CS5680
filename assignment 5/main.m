@@ -136,6 +136,7 @@ title('Labeled Ball.tif');
 
 disp('Total connected objects:');
 disp(ballNum);
+
 %problem 2
 mlLabeledBallIm = bwlabel(ballIm, 4);
 ballConn = bwconncomp(ballIm, 4);
@@ -147,11 +148,77 @@ figure();
 imshow(mlLabeledBallIm, []);
 title('Matlab Labeled Ball.tif');
 
-disp('Total connected objects:');
+disp('Total connected objects according to MATLAB:');
 disp(ballConn.NumObjects);
+
 %problem 3
+borderBallNum = ballNum;
+noBorderLabeledBallIm = labeledBallIm;
+
+[M, N] = size(noBorderLabeledBallIm);
+
+%remove border values on the top and bottom
+for m = 1:M
+    conObj = [];
+
+    if noBorderLabeledBallIm(m, 1)
+        noBorderLabeledBallIm(noBorderLabeledBallIm == noBorderLabeledBallIm(m, 1)) = 0;
+        borderBallNum = borderBallNum - 1;
+    end
+    if noBorderLabeledBallIm(m, N)
+        noBorderLabeledBallIm(noBorderLabeledBallIm == noBorderLabeledBallIm(m, N)) = 0;
+        borderBallNum = borderBallNum - 1;
+    end
+end
+
+%remove border values on the left and right
+for n = 1:N
+    if noBorderLabeledBallIm(1, n)
+        noBorderLabeledBallIm(noBorderLabeledBallIm == noBorderLabeledBallIm(1, n)) = 0;
+        borderBallNum = borderBallNum - 1;
+    end
+    if noBorderLabeledBallIm(M, n)
+        noBorderLabeledBallIm(noBorderLabeledBallIm == noBorderLabeledBallIm(M, n)) = 0;
+        borderBallNum = borderBallNum - 1;
+    end
+end
+ 
+% display images
+
+figure();
+
+%display ballIm
+subplot(1,2,1);
+imshow(logical(ballIm));
+title('Ball.tif');
+
+%display noBorderLabeledBallIm
+subplot(1,2,2);
+imshow(logical(noBorderLabeledBallIm));
+title('Ball.tif With border objects removed');
+
+disp('Total connected objects not on the border:');
+disp(borderBallNum);
 
 %problem 4
+mLNoBorderLabeledBallIm = imclearborder(ballIm, 4);
+borderBallConn = bwconncomp(mLNoBorderLabeledBallIm, 4);
+
+% display images
+figure();
+
+%display noBorderLabeledBallIm
+subplot(1,2,1);
+imshow(logical(noBorderLabeledBallIm));
+title('Ball.tiff With Border Objects Removed');
+
+%display noBorderLabeledBallIm
+subplot(1,2,2);
+imshow(logical(mLNoBorderLabeledBallIm));
+title('Matlab Call');
+
+disp('Total connected objects not on the border according to MATLAB:');
+disp(borderBallConn.NumObjects);
 
 %problem 5
 
