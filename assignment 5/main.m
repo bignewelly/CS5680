@@ -221,6 +221,28 @@ disp('Total connected objects not on the border according to MATLAB:');
 disp(borderBallConn.NumObjects);
 
 %problem 5
+histBallIm = CalHist(uint8(noBorderLabeledBallIm), false);
+
+min = min(histBallIm(histBallIm > 0),[],'all');
+smallestParticles = find(histBallIm <= (min + 5) & histBallIm > 0);
+
+visNoBorderLabeledBallIm = ismember(uint8(noBorderLabeledBallIm), smallestParticles - 1);
+
+% display images
+figure();
+
+%display ballIm
+subplot(1,2,1);
+imshow(ballIm);
+title('Ball.tif');
+
+%display noBorderLabeledBallIm
+subplot(1,2,2);
+imshow(logical(visNoBorderLabeledBallIm));
+title('Non-overlapping  connected  particles not on the border');
+
+disp('Total non-overlapping connected particles not on the border:');
+disp(numel(smallestParticles));
 
 disp("-----Finish Solving Problem II-----")
 pause;
