@@ -121,11 +121,10 @@ disp("-----Finish Solving Problem I-----")
 pause;
 
 % -----Problem II-----
-%TODO: Solve Problem II
 ballIm = imread('Ball.tif');
 
 %problem 1
-[labeledBallIm, ballNum] = FindComponentLabels(ballIm, [0 1 0; 1 1 1; 0 1 0]);
+[labeledBallIm, ballNum] = FindComponentLabels(ballIm, [1 1 1; 1 1 1; 1 1 1]);
 
 % display images
 figure();
@@ -138,8 +137,8 @@ disp('Total connected objects:');
 disp(ballNum);
 
 %problem 2
-mlLabeledBallIm = bwlabel(ballIm, 4);
-ballConn = bwconncomp(ballIm, 4);
+mlLabeledBallIm = bwlabel(ballIm, 8);
+ballConn = bwconncomp(ballIm, 8);
  
 % display images
 figure();
@@ -201,8 +200,8 @@ disp('Total connected objects not on the border:');
 disp(borderBallNum);
 
 %problem 4
-mLNoBorderLabeledBallIm = imclearborder(ballIm, 4);
-borderBallConn = bwconncomp(mLNoBorderLabeledBallIm, 4);
+mLNoBorderLabeledBallIm = imclearborder(ballIm, 8);
+borderBallConn = bwconncomp(mLNoBorderLabeledBallIm, 8);
 
 % display images
 figure();
@@ -223,8 +222,9 @@ disp(borderBallConn.NumObjects);
 %problem 5
 histBallIm = CalHist(uint8(noBorderLabeledBallIm), false);
 
-min = min(histBallIm(histBallIm > 0),[],'all');
-smallestParticles = find(histBallIm <= (min + 5) & histBallIm > 0);
+% Get minimum value with a slight threshold
+min = min(histBallIm(histBallIm > 0),[],'all') * 1.1;
+smallestParticles = find(histBallIm <= min & histBallIm > 0);
 
 visNoBorderLabeledBallIm = ismember(uint8(noBorderLabeledBallIm), smallestParticles - 1);
 
