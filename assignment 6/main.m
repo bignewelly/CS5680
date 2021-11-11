@@ -13,7 +13,7 @@ hsvBallIm = rgb2hsv(ballIm);
 hueBallIm = squeeze(hsvBallIm(:, :, 1));
 blackIds = find(hueBallIm <= 0.1 | hueBallIm >= 0.9);
 
-binaryBallIm = zeros(size(ballIm));
+binaryBallIm = zeros(size(ballIm(:, :, 1)));
 binaryBallIm(blackIds) = 1;
 
 closedBallIm = imopen(binaryBallIm, strel('disk',4,0));
@@ -30,12 +30,12 @@ title('Hue of ball.bmp');
 %display closedBallIm
 subplot(2,2,3);
 imshow(binaryBallIm, []);
-title('Display Closed ball.');
+title('Dark values from hue.');
 
 %display closedBallIm
 subplot(2,2,4);
 imshow(closedBallIm, []);
-title('Display Closed ball.');
+title('Open-Closed ball.');
 
 % get the center
 [M, N] = size(closedBallIm);
@@ -86,27 +86,63 @@ figure();
 imshow(crossedBallIm, []);
 title('Marked Ball Center');
 
-
-% -----Problem 2-----
-% get saturation
-satBallIm = squeeze(hsvBallIm(:, :, 2));
-
+% -----Problem 1.2-----
 % get value
 valBallIm = squeeze(hsvBallIm(:, :, 3));
-blackIds = find(hueBallIm <= 0.1 | hueBallIm >= 0.9);
+shadowIds = find(valBallIm > 0.27 & valBallIm <= 0.41);
+
+darkValBallIm = zeros(size(valBallIm));
+darkValBallIm(shadowIds) = 1;
+
+closedValBallIm = imopen(darkValBallIm, strel('disk',1,0));
+closedValBallIm = imclose(closedValBallIm, strel('diamond',5));
+closedValBallIm = closedValBallIm & ~closedBallIm;
+
+k = imdilate(closedBallIm, strel('disk',5,0)) & closedValBallIm;
+kMinus1 = zeros(size(closedBallIm));
+
+while any(k ~= kMinus1, 'all')
+    kMinus1 = k;
+    k = imdilate(k, strel('disk',5,0)) & closedValBallIm;
+end
 
 % display images
 figure();
 
-%display saturation of ballIm
-subplot(1,2,1);
-imshow(satBallIm, []);
-title('Saturation of Ball image');
-
 %display sampleIm on the top
-subplot(1,2,2);
+subplot(2,2,1);
 imshow(valBallIm, []);
 title('Value of Ball image');
+
+%display darkValBallIm on the bottom left
+subplot(2,2,2);
+imshow(darkValBallIm, []);
+title('Dark Values of Ball image');
+
+%display closedValBallIm on the bottom right
+subplot(2,2,3);
+imshow(closedValBallIm, []);
+title('Open-Closed Dark Ball Values');
+
+%display k on the bottom right
+subplot(2,2,4);
+imshow(k, []);
+title('Dilated And Subtract Ball');
+
+shadowBallIm = ballIm;
+
+greenShadowBallIm = shadowBallIm(:, :, 2);
+
+greenShadowBallIm(find(k)) = 255;
+
+shadowBallIm(:, :, 2)= greenShadowBallIm;
+
+% display images
+figure();
+
+%display sampleIm on the top
+imshow(shadowBallIm, []);
+title('Ball image with Highlighted Shadow');
 
 disp("-----Finish Solving Problem 1-----")
 pause;
