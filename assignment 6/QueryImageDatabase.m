@@ -9,11 +9,13 @@ function [orderedIds] = QueryImageDatabase(imHist, dbHist)
         results(i) = GetSimilarityScore(imHist, dbHist(i, :));
     end
     
-    orderedIds = uint8(zeros(1, S));
+    orderedIds = zeros(2, S);
     % Get the sorted ids for the images
     for i = 1:S
-        best = find(results == max(results, [], 'all'));
-        orderedIds(i) = best(1);
+        current = max(results, [], 'all');
+        best = find(results == current);
+        orderedIds(i, 1) = best(1);
+        orderedIds(i, 2) = current;
         results(best) = 0;
     end
 end

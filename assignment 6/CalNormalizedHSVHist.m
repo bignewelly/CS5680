@@ -1,3 +1,4 @@
+
 % Jonathon Pearson
 % Assignment 6
 
@@ -17,4 +18,6 @@ function [hist] = CalNormalizedHSVHist (im, hBinNum, sBinNum, vBinNum)
         
         hist(bin) = hist(bin) + 1;
     end
+    
+    hist = hist/sum(hist, 'all');
 end
