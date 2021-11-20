@@ -23,8 +23,8 @@ title('Foreman');
 
 
 % Convert to YUV
-yuvAkiyoIm = ConvertToYUV(akiyoIm);
-yuvForemanIm = ConvertToYUV(foremanIm);
+yuvAkiyoIm = rgb2ycbcr(akiyoIm);
+yuvForemanIm = rgb2ycbcr(foremanIm);
 
 
 % display images
@@ -32,17 +32,17 @@ figure();
 
 %display yuvAkiyoIm
 subplot(1,2,1);
-imshow(yuvAkiyoIm(:, :, 1));
+imshow(yuvAkiyoIm, []);
 title('Luminance of Akiyo');
 
 %display yuvForemanIm
 subplot(1,2,2);
-imshow(yuvForemanIm(:, :, 1));
+imshow(yuvForemanIm, []);
 title('Luminance Value of Foreman');
 
 % Convert Back to RGB
-rgbAkiyoIm = ConvertToRGB(yuvAkiyoIm);
-rgbForemanIm = ConvertToRGB(yuvForemanIm);
+rgbAkiyoIm = ycbcr2rgb(yuvAkiyoIm);
+rgbForemanIm = ycbcr2rgb(yuvForemanIm);
 
 
 % display images
@@ -50,12 +50,12 @@ figure();
 
 %display yuvAkiyoIm
 subplot(1,2,1);
-imshow(rgbAkiyoIm);
+imshow(rgbAkiyoIm, []);
 title('RGB Akiyo');
 
 %display yuvForemanIm
 subplot(1,2,2);
-imshow(rgbForemanIm);
+imshow(rgbForemanIm, []);
 title('RGB Foreman');
 
 disp("-----Finished Running-----")
