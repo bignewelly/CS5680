@@ -40,6 +40,25 @@ subplot(1,2,2);
 imshow(yuvForemanIm, []);
 title('Luminance Value of Foreman');
 
+
+% get edges
+akiyoImEdges = CallColorEdgeExtraction(yuvAkiyoIm, 50, 25, 25);
+foremanImEdges = CallColorEdgeExtraction(yuvForemanIm, 50, 25, 25);
+
+% display images
+figure();
+
+%display akiyoImEdges
+subplot(1,2,1);
+imshow(akiyoImEdges, []);
+title('Edges of Akiyo');
+
+%display foremanImEdges
+subplot(1,2,2);
+imshow(foremanImEdges, []);
+title('Edges of Foreman');
+
+
 % Convert Back to RGB
 rgbAkiyoIm = ycbcr2rgb(yuvAkiyoIm);
 rgbForemanIm = ycbcr2rgb(yuvForemanIm);
