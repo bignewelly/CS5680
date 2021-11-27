@@ -42,8 +42,8 @@ title('Luminance Value of Foreman');
 
 
 % get edges
-akiyoImEdges = CallColorEdgeExtraction(yuvAkiyoIm, 50, 25, 25);
-foremanImEdges = CallColorEdgeExtraction(yuvForemanIm, 50, 25, 25);
+akiyoImEdges = CallColorEdgeExtraction(yuvAkiyoIm);
+foremanImEdges = CallColorEdgeExtraction(yuvForemanIm);
 
 % display images
 figure();
