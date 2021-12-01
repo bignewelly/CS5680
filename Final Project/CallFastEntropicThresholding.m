@@ -2,12 +2,14 @@
 % Final Project
 
 function [threshold] = CallFastEntropicThresholding(Im)
+    % We're going to start by finding our minimum possible threshold
     threshold = min(Im,[],'all');
-    f = numel(find(Im == threshold));        
-    pn = f/numel(find(Im <= threshold));
+    % Not lets get the all the values
+    f = numel(find(Im == threshold));
+    % Find the probabilty that these are edge pixels
     pe = f/numel(find(Im > threshold));
-
-    hn = - pn*log(pn);
+    
+    hn = 0;
     he = - pe*log(pe); 
     
     for i=threshold +1:max(Im,[],'all')
@@ -26,14 +28,19 @@ function [threshold] = CallFastEntropicThresholding(Im)
         p1p = numel(find(Im > t));
         ft = numel(find(Im == t));
         
-        hn = p0/p0p*hn-ft/p0p*log(ft/p0p)-p0/p0p*log(p0/p0p);
-        he = p1/p1p*he-ft/p1p*log(ft/p1p)-p1/p1p*log(p1/p1p);
+        if p0p && p0
+            hn = p0/p0p*hn-ft/p0p*log(ft/p0p)-p0/p0p*log(p0/p0p);
+        end
+        
+        if p1p && p1
+            he = p1/p1p*he+ft/p1p*log(ft/p1p)-p1/p1p*log(p1/p1p);
+        end
         
         ht = hn + he;
 
         if ht > hT
             hT = ht;
-            threshold = t;
+            threshold = ht;
         end
     end
 end
