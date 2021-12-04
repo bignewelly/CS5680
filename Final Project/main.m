@@ -59,23 +59,25 @@ imshow(foremanImEdges, []);
 title('Edges of Foreman');
 
 
-% Convert Back to RGB
-rgbAkiyoIm = ycbcr2rgb(yuvAkiyoIm);
-rgbForemanIm = ycbcr2rgb(yuvForemanIm);
-
+% Get the connected edges
+akiyoImConnectedEdges = bwlabel(akiyoImEdges, 8);
+foremanImConnectedEdges = bwlabel(foremanImEdges, 8);
 
 % display images
 figure();
 
-%display yuvAkiyoIm
+%display akiyoImConnectedEdges
 subplot(1,2,1);
-imshow(rgbAkiyoIm, []);
-title('RGB Akiyo');
+imshow(akiyoImConnectedEdges, []);
+title('Connected Edges of Akiyo');
 
-%display yuvForemanIm
+%display foremanImConnectedEdges
 subplot(1,2,2);
-imshow(rgbForemanIm, []);
-title('RGB Foreman');
+imshow(foremanImConnectedEdges, []);
+title('Connected Edges of Foreman');
+
+
+
 
 disp("-----Finished Running-----")
 pause;
