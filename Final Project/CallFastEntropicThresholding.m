@@ -28,24 +28,22 @@ function [threshold] = CallFastEntropicThresholding(Im)
     p0p = numel(find(Im == threshold + 1));
     p1p = numel(find(Im > threshold));
     for t=threshold:max(Im,[],'all') - 2
-        ftp = numel(find(int16(Im) == t + 1));
+        ftp = numel(find(Im == t + 1));
         p0 = p0p;
         p1 = p1p;
         p0p = p0p + ftp;
         p1p = p1p - ftp;
 
-        temp = p0/p0p*hn-ftp/p0p*log(ftp/p0p)-p0/p0p*log(p0/p0p); 
-        hn = temp;
+        hn = (p0/p0p)*hn-((ftp/p0p)*log(ftp/p0p))-((p0/p0p)*log(p0/p0p)); 
 
-        temp = p1/p1p*he+ftp/p1p*log(ftp/p1p)-p1/p1p*log(p1/p1p);
-        he = temp;
+        he = (p1/p1p)*he+((ftp/p1p)*log(ftp/p1p))-((p1/p1p)*log(p1/p1p));
 
         ht = hn + he;
 
         % If the entropy is greater for this threshold, let's use it.
         if ht > hT
             hT = ht;
-            threshold = t;
+            threshold = ht;
         end
 
     end
