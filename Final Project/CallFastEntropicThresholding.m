@@ -4,6 +4,7 @@
 function [threshold] = CallFastEntropicThresholding(Im)
     % We're going to start by finding our minimum possible threshold
     threshold = min(Im,[],'all');
+   
     
     % Not lets get the all the values
     f = numel(find(Im == threshold));
@@ -23,28 +24,38 @@ function [threshold] = CallFastEntropicThresholding(Im)
         end        
     end
     
+    disp('min threshold:');
+    disp(threshold);
+    
+    disp('max threshold:');
+    disp(max(Im,[],'all'));
+    
     % Calculate our entropy for each threshold
     hT = hn + he;
     p0p = numel(find(Im == threshold + 1));
-    p1p = numel(find(Im > threshold));
+    p1p = numel(find(Im >= threshold + 1));
     for t=threshold:max(Im,[],'all') - 2
         ftp = numel(find(Im == t + 1));
-        p0 = p0p;
-        p1 = p1p;
-        p0p = p0p + ftp;
-        p1p = p1p - ftp;
+        if ftp
+            p0 = p0p;
+            p1 = p1p;
+            p0p = numel(find(Im <= t));
+            p1p = numel(find(Im >= t + 1));
+ 
+            hn = (p0/p0p)*hn-((ftp/p0p)*log(ftp/p0p))-((p0/p0p)*log(p0/p0p)); 
 
-        hn = (p0/p0p)*hn-((ftp/p0p)*log(ftp/p0p))-((p0/p0p)*log(p0/p0p)); 
+            he = (p1/p1p)*he+((ftp/p1p)*log(ftp/p1p))-((p1/p1p)*log(p1/p1p));
 
-        he = (p1/p1p)*he+((ftp/p1p)*log(ftp/p1p))-((p1/p1p)*log(p1/p1p));
+            ht = hn + he;
 
-        ht = hn + he;
+            if not(isnan(ht))
+            % If the entropy is greater for this threshold, let's use it.
+                if ht > hT
+                    hT = ht;
+                    threshold = t;
+                end
+            end
 
-        % If the entropy is greater for this threshold, let's use it.
-        if ht > hT
-            hT = ht;
-            threshold = ht;
         end
-
     end
 end

@@ -15,6 +15,9 @@ function [edges] = CallEdgeExtraction(Im)
     
     % Get the threshold
     T = CallFastEntropicThresholding(MOE);
+    
+    disp('T:');
+    disp(T);
     %T2 = CallEntropicThresholding(MOE);
     
     %if not(T == T2)
