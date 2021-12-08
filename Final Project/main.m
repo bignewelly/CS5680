@@ -23,8 +23,8 @@ title('Foreman');
 
 
 % Convert to YUV
-yuvAkiyoIm = rgb2ycbcr(akiyoIm);
-yuvForemanIm = rgb2ycbcr(foremanIm);
+yuvAkiyoIm = RGBToYUV(akiyoIm);
+yuvForemanIm = RGBToYUV(foremanIm);
 
 
 % display images
