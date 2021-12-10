@@ -61,7 +61,21 @@ subplot(1,2,2);
 imshow(foremanImConnectedEdges, []);
 title('Connected Edges of Foreman');
 
+akiyoImSeeds = GetSeeds(yuvAkiyoIm, akiyoImConnectedEdges, 10, 3);
+foremanImSeeds = GetSeeds(yuvForemanIm, foremanImConnectedEdges, 10, 3);
 
+% display seeds
+figure();
+
+%display akiyoImSeeds
+subplot(1,2,1);
+imshow(akiyoImSeeds, []);
+title('Seeds of Akiyo');
+
+%display foremanImSeeds
+subplot(1,2,2);
+imshow(foremanImSeeds, []);
+title('Seeds of Foreman');
 
 
 disp("-----Finished Running-----")
