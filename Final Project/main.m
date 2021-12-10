@@ -26,21 +26,6 @@ title('Foreman');
 yuvAkiyoIm = RGBToYUV(akiyoIm);
 yuvForemanIm = RGBToYUV(foremanIm);
 
-
-% display images
-figure();
-
-%display yuvAkiyoIm
-subplot(1,2,1);
-imshow(yuvAkiyoIm, []);
-title('Luminance of Akiyo');
-
-%display yuvForemanIm
-subplot(1,2,2);
-imshow(yuvForemanIm, []);
-title('Luminance Value of Foreman');
-
-
 % get edges
 akiyoImEdges = CallColorEdgeExtraction(yuvAkiyoIm);
 foremanImEdges = CallColorEdgeExtraction(yuvForemanIm);

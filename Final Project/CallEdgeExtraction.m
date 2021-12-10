@@ -29,17 +29,4 @@ function [edges] = CallEdgeExtraction(Im)
     edges(MOE >= T) = 1;
     
     edges = logical(edges);
-    
-        % display images
-    figure();
-
-    %display MOE
-    subplot(1,2,1);
-    imshow(MOE, []);
-    title('MOE');
-
-    %display edges
-    subplot(1,2,2);
-    imshow(edges, []);
-    title(T);
 end
