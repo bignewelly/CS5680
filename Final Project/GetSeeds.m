@@ -76,6 +76,4 @@ function [seeds] = GetSeeds(Im, LabeledEdges, DT, CT)
         % mark the new seed
         seeds(cntrd(1), cntrd(2)) = 1;
     end 
-    
-    seeds = logical(seeds);
 end

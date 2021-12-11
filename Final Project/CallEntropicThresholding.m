@@ -2,7 +2,6 @@
 % Final Project
 
 function [threshold] = CallEntropicThresholding(Im)
-    
     threshold = 0;
     hT = 0;
     for t=min(Im,[],'all'):max(Im,[],'all')
