@@ -53,9 +53,9 @@ function [regions, regionCount] = CallSeededRegionGrowing(Im, Seeds)
         end
         
         brdPx = find(borders > 0);
-        y = Im(:, :, 1);
-        u = Im(:, :, 2);
-        v = Im(:, :, 3);
+        y = double(Im(:, :, 1));
+        u = double(Im(:, :, 2));
+        v = double(Im(:, :, 3));
         P = [brdPx, sqrt((y(brdPx) - regionInfo(borders(brdPx), 1)).^2 + (u(brdPx) - regionInfo(borders(brdPx), 2)).^2 + (v(brdPx) - regionInfo(borders(brdPx), 3)).^2)];
              
             

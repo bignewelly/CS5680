@@ -15,10 +15,15 @@ function [seeds] = GetSeeds(Im, LabeledEdges, DT, CT)
     
     centrds = int16(centrds);
     
+    % Get the distance of each centroid from all the others
     w = pdist(centrds);
-        
+      
+    % Put it into a squareform to make it easer to get the weights
     weights = squareform(w);
     
+    % We are going to get the values we need to turn each centroid into a
+    % node in a graph with waited edges.  That way we can generate a
+    % Minimum Spanning Tree
     s = uint16(zeros(numel(w), 1));
     t = uint16(zeros(numel(w), 1));
     
@@ -58,10 +63,10 @@ function [seeds] = GetSeeds(Im, LabeledEdges, DT, CT)
         % check the colorspace difference.  If it's withing the threshold
         % DC average the centroids.
         total = 1;
-        p = Im(cntrd(1), cntrd(2), :);
+        p = double(Im(cntrd(1), cntrd(2), :));
         for i = 1 : numel(X)
             % Get the pixel from the original image
-            p2 = Im(X(i), Y(i), :);
+            p2 = double(Im(X(i), Y(i), :));
             if sqrt((p(1) - p2(1))^2 + (p(2) - p2(2))^2 + (p(3) - p2(3))^2) >= CT
                 % remove the old seed
                 seeds(X(i), Y(i)) = 0;
