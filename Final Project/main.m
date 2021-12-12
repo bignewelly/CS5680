@@ -77,8 +77,8 @@ subplot(1,2,2);
 imshow(foremanImSeeds, []);
 title('Seeds of Foreman');
 
-akiyoImRegions = CallSeededRegionGrowing(yuvAkiyoIm, akiyoImSeeds);
-foremanImRegions = CallSeededRegionGrowing(yuvForemanIm, foremanImSeeds);
+[akiyoImRegions, akiyoImRegionsInfo] = CallSeededRegionGrowing(yuvAkiyoIm, akiyoImSeeds);
+[foremanImRegions, foremanImRegionsInfo] = CallSeededRegionGrowing(yuvForemanIm, foremanImSeeds);
 
 % display seeds
 figure();

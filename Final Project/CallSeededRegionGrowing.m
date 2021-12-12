@@ -1,7 +1,7 @@
 % Jonathon Pearson
 % Final Project
 
-function [regions, colors] = CallSeededRegionGrowing(Im, Seeds)
+function [regions, regionCount] = CallSeededRegionGrowing(Im, Seeds)
     figure();
     % Let's create a table that we can use for processing the regions and
     % their borders
@@ -9,7 +9,16 @@ function [regions, colors] = CallSeededRegionGrowing(Im, Seeds)
     %  Get the max amount of regions we will be using
     regionsAndBorders = double(bwlabel(Seeds)); 
     regionCount = max(regionsAndBorders, [], 'all');
-    colors = zeros(regionCount, 3);
+    
+    % this is where we're going to store our region Id,  
+    % indeces 1-3 are the color changes. It will store the average color
+    % index 4 is the total pixel count
+    regionInfo = zeros(regionCount, 4);
+    for r =1:regionCount
+        [x, y] = find(regionsAndBorders == r);
+        col = Im(x, y, :);
+        regionInfo(r, :) = [col(1) col(2) col(3) 1];
+    end
         
     % We have our seeds, now let's start growing our regions
     zeroPix = -1;
@@ -18,6 +27,9 @@ function [regions, colors] = CallSeededRegionGrowing(Im, Seeds)
         P = [];
         %Grow each of the regions.
         borders = imdilate(regionsAndBorders, strel('square', 3));
+        if max(borders, [], 'all') > regionCount
+            disp("Something's wrong");
+        end
         borders(regionsAndBorders>0) = 0;
         
         % check each pixel to see if it borders with another regiion
@@ -40,44 +52,20 @@ function [regions, colors] = CallSeededRegionGrowing(Im, Seeds)
             end
         end
         
-        regionsAndBorders = regionsAndBorders + borders;
-        
-%         for r=1:regionCount
-%             % Set binary image back to zero
-%             binReg(:, :) = 0;
-%             
-%             % Get the current region pixels
-%             binReg(regionsAndBorders == r) = 1;
-%             
-%             % get the pixel average for the region
-%             avg = GetRegionAverage(Im, binReg);
-%             
-%             % Dilate the region and find the new pixels
-%             [newPixelsX, newPixelsY] = find(imdilate(binReg, strel('square', 3)) - binReg);
-%             
-%             % Get the pixel distance for each
-%             for i=1:numel(newPixelsX)
-%                 p = Im(newPixelsX(i), newPixelsY(i), :);
-% 
-%                 P = [P; newPixelsX(i), newPixelsY(i), r, sqrt((p(1) - avg(1))^2 + (p(2) - avg(2))^2 + (p(3) - avg(3))^2)];
-% 
-%             end
-%         end
-%             %2: Sort the newpixels by distance from the average color value from
-%             %the region that grew them
-%             minD = find(P(:, 4) == min(P(:, 4), [], 'all'));
-%             X = P(:, 1);
-%             Y = P(:, 2);
-%             R = P(:, 3);
-%                         
-%             for i=1:numel(minD)
-%                 regionsAndBorders(X(minD(i)), Y(minD(i))) = R(minD(i));
-%             end
-                 
-            imshow(uint16(regionsAndBorders), []);
-
-            %3: Add the pixels that have the minimum distance
+        brdPx = find(borders > 0);
+        y = Im(:, :, 1);
+        u = Im(:, :, 2);
+        v = Im(:, :, 3);
+        P = [brdPx, sqrt((y(brdPx) - regionInfo(borders(brdPx), 1)).^2 + (u(brdPx) - regionInfo(borders(brdPx), 2)).^2 + (v(brdPx) - regionInfo(borders(brdPx), 3)).^2)];
+             
             
+        %2: Find the smallest distance
+        minD = find(P(:, 2) == min(P(:, 2), [], 'all'));
+
+        %3: Add the pixels that have the minimum distance
+        regionsAndBorders(P(minD)) = borders(P(minD));
+        imshow(uint16(regionsAndBorders), []);
+
     end
     
     regions = regionsAndBorders;
