@@ -23,27 +23,12 @@ title('Foreman');
 
 
 % Convert to YUV
-yuvAkiyoIm = rgb2ycbcr(akiyoIm);
-yuvForemanIm = rgb2ycbcr(foremanIm);
-
-
-% display images
-figure();
-
-%display yuvAkiyoIm
-subplot(1,2,1);
-imshow(yuvAkiyoIm, []);
-title('Luminance of Akiyo');
-
-%display yuvForemanIm
-subplot(1,2,2);
-imshow(yuvForemanIm, []);
-title('Luminance Value of Foreman');
-
+yuvAkiyoIm = RGBToYUV(akiyoIm);
+yuvForemanIm = RGBToYUV(foremanIm);
 
 % get edges
-akiyoImEdges = CallColorEdgeExtraction(yuvAkiyoIm, 50, 25, 25);
-foremanImEdges = CallColorEdgeExtraction(yuvForemanIm, 50, 25, 25);
+akiyoImEdges = CallColorEdgeExtraction(yuvAkiyoIm);
+foremanImEdges = CallColorEdgeExtraction(yuvForemanIm);
 
 % display images
 figure();
@@ -59,23 +44,54 @@ imshow(foremanImEdges, []);
 title('Edges of Foreman');
 
 
-% Convert Back to RGB
-rgbAkiyoIm = ycbcr2rgb(yuvAkiyoIm);
-rgbForemanIm = ycbcr2rgb(yuvForemanIm);
-
+% Get the connected edges
+akiyoImConnectedEdges = bwlabel(akiyoImEdges, 8);
+foremanImConnectedEdges = bwlabel(foremanImEdges, 8);
 
 % display images
 figure();
 
-%display yuvAkiyoIm
+%display akiyoImConnectedEdges
 subplot(1,2,1);
-imshow(rgbAkiyoIm, []);
-title('RGB Akiyo');
+imshow(akiyoImConnectedEdges, []);
+title('Connected Edges of Akiyo');
 
-%display yuvForemanIm
+%display foremanImConnectedEdges
 subplot(1,2,2);
-imshow(rgbForemanIm, []);
-title('RGB Foreman');
+imshow(foremanImConnectedEdges, []);
+title('Connected Edges of Foreman');
+
+akiyoImSeeds = GetSeeds(yuvAkiyoIm, akiyoImConnectedEdges, 10, 3);
+foremanImSeeds = GetSeeds(yuvForemanIm, foremanImConnectedEdges, 10, 3);
+
+% display seeds
+figure();
+
+%display akiyoImSeeds
+subplot(1,2,1);
+imshow(akiyoImSeeds, []);
+title('Seeds of Akiyo');
+
+%display foremanImSeeds
+subplot(1,2,2);
+imshow(foremanImSeeds, []);
+title('Seeds of Foreman');
+
+[akiyoImRegions, akiyoImRegionsInfo] = CallSeededRegionGrowing(yuvAkiyoIm, akiyoImSeeds);
+[foremanImRegions, foremanImRegionsInfo] = CallSeededRegionGrowing(yuvForemanIm, foremanImSeeds);
+
+% display seeds
+figure();
+
+%display akiyoImRegions
+subplot(1,2,1);
+imshow(akiyoImRegions, []);
+title('Akiyo Regions');
+
+%display foremanImRegions
+subplot(1,2,2);
+imshow(foremanImRegions, []);
+title('Foreman Regions');
 
 disp("-----Finished Running-----")
 pause;
