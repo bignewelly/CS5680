@@ -1,15 +1,19 @@
 % Jonathon Pearson
 % Final Project
 
-function [avg] = GetRegionAverage(Im, Region)
+function [avg, total] = GetRegionAverage(Im, NewPixels, Region, CurrentAvg, CurrentTotal)
+    colorSum = CurrentAvg .* CurrentTotal;
+    
+    
+
     R = Im(:, :, 1);
-    R(Region == 0) = 0;
+    R = R(NewPixels == Region);
     G = Im(:, :, 2);
-    G(Region == 0) = 0;
+    G = G(NewPixels == Region);
     B = Im(:, :, 3);
-    B(Region == 0) = 0;
+    B = B(NewPixels == Region);
     
-    totalP = sum(Region, 'all');
+    total = sum(NewPixels(NewPixels == Region), 'all');
     
-    avg = [sum(R, 'all'), sum(G, 'all'), sum(B, 'all')]/totalP;
+    avg = [sum(R, 'all') + colorSum(1), sum(G, 'all') + colorSum(2), sum(B, 'all') + colorSum(3)]/total;
 end

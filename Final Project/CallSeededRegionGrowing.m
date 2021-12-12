@@ -64,6 +64,14 @@ function [regions, regionCount] = CallSeededRegionGrowing(Im, Seeds)
 
         %3: Add the pixels that have the minimum distance
         regionsAndBorders(P(minD)) = borders(P(minD));
+        
+        for r = 1 : numel(regionInfo(:, 1))
+            [avg, total] = GetRegionAverage(Im, borders, r, [regionInfo(r, 1), regionInfo(r, 2), regionInfo(r, 3)], regionInfo(r, 4));
+            regionInfo(r, 1) = avg(1);
+            regionInfo(r, 2) = avg(2);
+            regionInfo(r, 3) = avg(3);
+            regionInfo(r, 4) = total;
+        end
         imshow(uint16(regionsAndBorders), []);
 
     end
